@@ -157,7 +157,7 @@ class C1 extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 40),
+              //SizedBox(height: 20),
               Expanded(
                 flex: 4,
                 child: Padding(

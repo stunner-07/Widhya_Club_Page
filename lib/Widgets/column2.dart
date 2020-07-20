@@ -70,13 +70,15 @@ class C2 extends StatelessWidget {
                         left: 45,
                         top: 0,
                       ),
-                      child: Text(
-                        '\n1) : Hackathon - 2020\n\n2) : Internship-Drive - July 2020',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
+                      child: SingleChildScrollView(
+                        child: Text(
+                          '\n1) : Hackathon - 2020\n\n2) : Internship-Drive - July 2020',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
+                          textAlign: TextAlign.left,
                         ),
-                        textAlign: TextAlign.left,
                       ),
                     ),
                   )
@@ -89,70 +91,72 @@ class C2 extends StatelessWidget {
           ),
           Expanded(
             flex: 3,
-            child: Material(
-              elevation: 8,
-              borderRadius: BorderRadius.circular(25),
-              shadowColor: Colors.grey,
-              color: Colors.lightBlue[50],
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 25,
-                    ),
-                    child: Text(
-                      'About the Club',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
+            child: SingleChildScrollView(
+              child: Material(
+                elevation: 8,
+                borderRadius: BorderRadius.circular(25),
+                shadowColor: Colors.grey,
+                color: Colors.lightBlue[50],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 25,
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Text(
-                      club.currentClub.shortdes,
-                      softWrap: true,
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        height: 1.5,
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    thickness: 1.5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      'Club Members',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemBuilder: (ctx, i) => ListTile(
-                      leading: CircleAvatar(
-                        radius: 18,
-                      ),
-                      title: Text(
-                        club.currentClub.memName[i],
+                      child: Text(
+                        'About the Club',
                         style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey[800],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
                         ),
                       ),
                     ),
-                    itemCount: club.currentClub.memName.length,
-                  ),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text(
+                        club.currentClub.shortdes,
+                        softWrap: true,
+                        style: TextStyle(
+                          fontSize: 14.0,
+                          height: 1.5,
+                        ),
+                      ),
+                    ),
+                    Divider(
+                      thickness: 1.5,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        'Club Members',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemBuilder: (ctx, i) => ListTile(
+                        leading: CircleAvatar(
+                          radius: 18,
+                        ),
+                        title: Text(
+                          club.currentClub.memName[i],
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey[800],
+                          ),
+                        ),
+                      ),
+                      itemCount: club.currentClub.memName.length,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

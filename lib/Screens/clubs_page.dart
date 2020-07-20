@@ -4,6 +4,7 @@ import 'package:widhya_club/Models/clubs_detail.dart';
 import 'package:widhya_club/Widgets/capp_bar.dart';
 import 'package:widhya_club/Widgets/column1.dart';
 import 'package:widhya_club/Widgets/column2.dart';
+import 'package:widhya_club/Widgets/column3.dart';
 
 class ClubsPage extends StatelessWidget {
   static const route = '/clubs';
@@ -59,6 +60,9 @@ class ClubsPage extends StatelessWidget {
                           ),
                           Expanded(
                             child: C2(),
+                          ),
+                          Expanded(
+                            child: C3(),
                           ),
                         ],
                       ),
