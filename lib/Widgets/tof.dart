@@ -23,7 +23,7 @@ class TOF extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            if (Provider.of<User>(context).user == 1)
+            if (Provider.of<UserType>(context).user == 1)
               IconButton(
                 icon: Icon(
                   Icons.edit,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:widhya_club/Models/user.dart';
 
 import 'Models/clubs_detail.dart';
 import 'Models/topic_of_focus.dart';
@@ -18,13 +19,16 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
-          value: User(),
+          value: UserType(),
         ),
         ChangeNotifierProvider.value(
           value: TopicsList(),
         ),
         ChangeNotifierProvider.value(
           value: ClubDetail(),
+        ),
+        ChangeNotifierProvider.value(
+          value: UserProvider(),
         ),
       ],
       child: MaterialApp(

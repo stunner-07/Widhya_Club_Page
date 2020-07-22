@@ -1,47 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widhya_club/Models/clubs_detail.dart';
+import 'package:widhya_club/Models/user_type.dart';
 
 class CAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var req = Provider.of<ClubDetail>(context, listen: false).currentClub.req;
+    var req = Provider.of<ClubDetail>(context).currentClub.req;
     return Container(
       padding: EdgeInsets.all(8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          FlatButton(
-            hoverColor: Colors.red[300],
-            onPressed: () {
-              return showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Dialog(
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(20.0)), //this right here
-                      child: Container(
-                        width: 400,
-                        height: 400,
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: _requests(req),
+          if (Provider.of<UserType>(context).user == 1)
+            FlatButton(
+              hoverColor: Colors.red[300],
+              onPressed: () {
+                return showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Dialog(
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(20.0)), //this right here
+                        child: Container(
+                          width: 400,
+                          height: 400,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: _requests(req),
+                          ),
                         ),
-                      ),
-                    );
-                  });
-            },
-            child: Text(
-              'Requests',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontFamily: 'WorkSans-SemiBold.ttf',
-                fontSize: 18,
+                      );
+                    });
+              },
+              child: Text(
+                'Requests',
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontFamily: 'WorkSans-SemiBold.ttf',
+                  fontSize: 18,
+                ),
               ),
             ),
-          ),
           SizedBox(
             width: 20,
           ),
@@ -64,14 +66,16 @@ class CAppBar extends StatelessWidget {
             height: 35.0,
             width: 100.0,
             child: Center(
-              child: GestureDetector(
-                onTap: () => Navigator.of(context).pushReplacementNamed('/'),
+              child: FlatButton(
+                onPressed: () =>
+                    Navigator.of(context).pushReplacementNamed('/'),
                 child: Text(
                   'Logout',
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w700,
                     fontFamily: 'WorkSans-SemiBold.ttf',
+                    fontSize: 14,
                   ),
                 ),
               ),
@@ -89,15 +93,17 @@ class CAppBar extends StatelessWidget {
   }
 }
 
-Widget _requests(List<String> req) {
+Widget _requests(Set<String> req) {
   return ListView.builder(
     itemBuilder: (ctx, i) {
       return ListTile(
         leading: CircleAvatar(
           radius: 18,
-          child: Text(req[i].substring(0, 2)),
+          child: Text(req.elementAt(i).substring(0, 2)),
         ),
-        title: Text(req[i]),
+        title: Text(
+          req.elementAt(i),
+        ),
         trailing: Wrap(
           children: [
             IconButton(

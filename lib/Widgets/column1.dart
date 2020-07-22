@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widhya_club/Models/clubs_detail.dart';
+import 'package:widhya_club/Models/user.dart';
 import 'package:widhya_club/Models/user_type.dart';
 import 'package:widhya_club/Widgets/tof.dart';
 
-class C1 extends StatelessWidget {
+class C1 extends StatefulWidget {
+  @override
+  _C1State createState() => _C1State();
+}
+
+class _C1State extends State<C1> {
+  int flag = 0;
+
+  void _setFlag() {
+    setState(() {
+      flag = 1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    Details club = Provider.of<ClubDetail>(context).currentClub;
+    var club = Provider.of<ClubDetail>(context);
+    var user = Provider.of<UserProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.only(
         top: 40.0,
@@ -81,7 +96,7 @@ class C1 extends StatelessWidget {
                           width: 15,
                         ),
                         Text(
-                          club.name,
+                          club.currentClub.name,
                           style: TextStyle(
                             fontSize: 24,
                             color: Colors.black87,
@@ -103,7 +118,7 @@ class C1 extends StatelessWidget {
                           width: 15,
                         ),
                         Text(
-                          club.collegeName,
+                          club.currentClub.collegeName,
                           style: TextStyle(
                             fontSize: 13,
                             color: Colors.grey,
@@ -125,7 +140,7 @@ class C1 extends StatelessWidget {
                           width: 15,
                         ),
                         Text(
-                          club.noMem.toString(),
+                          club.currentClub.noMem.toString(),
                           style: TextStyle(
                             fontSize: 13,
                             color: Colors.red,
@@ -148,9 +163,15 @@ class C1 extends StatelessWidget {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Spacer(),
-                          if (Provider.of<User>(context).user == 0)
+                          if (Provider.of<UserType>(context).user == 0)
                             buttonContainer(
-                                color: Colors.orange, name: 'Connect'),
+                              Colors.orange,
+                              'Connect',
+                              flag,
+                              _setFlag,
+                              club,
+                              user,
+                            ),
                         ],
                       ),
                     ),
@@ -180,24 +201,24 @@ class C1 extends StatelessWidget {
   }
 }
 
-Widget buttonContainer({Color color, String name}) {
+Widget buttonContainer(Color color, String name, int flag, Function fun,
+    ClubDetail club, UserProvider user) {
   return Container(
     child: FlatButton(
-      onPressed: null,
+      onPressed: () {
+        if (flag == 0) {
+          club.postRequests(user.currentUser);
+        }
+        fun();
+      },
       child: Text(
         name,
         style: TextStyle(color: Colors.white),
       ),
     ),
-    decoration:
-        BoxDecoration(borderRadius: BorderRadius.circular(25), color: color),
-  );
-}
-
-Widget roundButton({Color color, IconData icon}) {
-  return Container(
-    child: IconButton(icon: Icon(icon), onPressed: null),
-    decoration:
-        BoxDecoration(borderRadius: BorderRadius.circular(100), color: color),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(25),
+      color: flag == 0 ? color : Colors.grey,
+    ),
   );
 }

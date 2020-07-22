@@ -1,13 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class User with ChangeNotifier {
-  String name;
-  String uid;
-  User(this.name, this.uid);
+class UserProvider with ChangeNotifier {
+  String currentUser = 'Kshitij';
 
-  Future<String> returnUserId() async {
-    final db = Firestore.instance;
-    QuerySnapshot _myDoc = await db.collection('Users').getDocuments();
-  }
+// connect this to user databse so as to fetch current user
+
+  // Future<String> returnUserId() async {
+  //   final db = Firestore.instance;
+  //   var _doc = await db.collection('Users').getDocuments();
+  //   _doc.documents.map((e) {
+  //     currentUser = e.data['name'];
+  //   });
+  //   return currentUser;
+  // }
 }
