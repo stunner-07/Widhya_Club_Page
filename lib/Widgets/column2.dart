@@ -144,6 +144,8 @@ class C2 extends StatelessWidget {
                       itemBuilder: (ctx, i) => ListTile(
                         leading: CircleAvatar(
                           radius: 18,
+                          child:
+                              Text(club.currentClub.memName[i].substring(0, 2)),
                         ),
                         title: Text(
                           club.currentClub.memName[i],

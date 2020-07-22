@@ -14,6 +14,7 @@ class ClubsPage extends StatelessWidget {
     return FutureBuilder(
         future: club.fetchClub(),
         builder: (ctx, snapshot) {
+          // print(club.currentClub.req);
           return snapshot.connectionState == ConnectionState.waiting
               ? Center(
                   child: CircularProgressIndicator(),

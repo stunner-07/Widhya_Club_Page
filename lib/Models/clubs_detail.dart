@@ -7,10 +7,12 @@ class Details {
   String name;
   String collegeName;
   int noMem;
+  List<String> req;
   List<String> memName;
   String shortdes;
+
   Details(this.imgUrl, this.name, this.collegeName, this.noMem, this.memName,
-      this.shortdes);
+      this.shortdes, this.req);
 
   Map<String, dynamic> toMap() {
     return {
@@ -20,6 +22,7 @@ class Details {
       'noMem': noMem,
       'memName': memName,
       'shortdes': shortdes,
+      'requests': req,
     };
   }
 
@@ -33,6 +36,7 @@ class Details {
       map['noMem'],
       List<String>.from(map['memName']),
       map['shortdes'],
+      List<String>.from(map['requests']),
     );
   }
 }
@@ -50,6 +54,12 @@ class ClubDetail with ChangeNotifier {
     _myDoc.documents.forEach((element) async {
       _currentClub = (Details.fromMap(element.data));
     });
+    //print(_currentClub.req);
+  }
+
+  Future<String> returnUserId() async {
+    final db = Firestore.instance;
+    return await db.collection('Users').document().documentID;
   }
 
   Map<String, double> pieChartData = {
