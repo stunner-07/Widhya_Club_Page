@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:widhya_club/Models/user.dart';
 
 import 'Models/clubs_detail.dart';
-import 'Models/topic_of_focus.dart';
 import 'Models/user_type.dart';
 import 'Screens/clubs_page.dart';
 import 'Screens/sample_login.dart';
@@ -20,9 +19,6 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(
           value: UserType(),
-        ),
-        ChangeNotifierProvider.value(
-          value: TopicsList(),
         ),
         ChangeNotifierProvider.value(
           value: ClubDetail(),

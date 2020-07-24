@@ -10,7 +10,7 @@ class ClubsPage extends StatelessWidget {
   static const route = '/clubs';
   @override
   Widget build(BuildContext context) {
-    var club = Provider.of<ClubDetail>(context);
+    var club = Provider.of<ClubDetail>(context, listen: false);
     return FutureBuilder(
         future: club.fetchClub(),
         builder: (ctx, snapshot) {

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widhya_club/Models/clubs_detail.dart';
+import 'package:widhya_club/Models/user_type.dart';
 
 class C2 extends StatelessWidget {
+  TextEditingController _textEdit = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var club = Provider.of<ClubDetail>(context);
@@ -58,9 +60,68 @@ class C2 extends StatelessWidget {
                                 fontWeight: FontWeight.bold),
                           ),
                           subtitle: Text(
-                            ' June 2020',
+                            ' ${DateTime.now().month} ${DateTime.now().year}',
                             style: TextStyle(fontSize: 12, color: Colors.black),
                           ),
+                          trailing: Provider.of<UserType>(context,
+                                          listen: false)
+                                      .user ==
+                                  1
+                              ? IconButton(
+                                  icon: Icon(
+                                    Icons.edit,
+                                    color: Colors.black,
+                                  ),
+                                  onPressed: () => showDialog(
+                                      context: context,
+                                      builder: (BuildContext ctx) {
+                                        return Dialog(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      20.0)), //this right here
+                                          child: Container(
+                                            height: 200,
+                                            width: 100,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Container(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            12.0),
+                                                    child: TextField(
+                                                      decoration:
+                                                          InputDecoration(
+                                                              labelText:
+                                                                  'Events'),
+                                                      controller: _textEdit,
+                                                      keyboardType:
+                                                          TextInputType.text,
+                                                      onSubmitted: (_) => null,
+                                                    ),
+                                                  ),
+                                                ),
+                                                FlatButton(
+                                                  onPressed: () {
+                                                    club.addEvents(
+                                                        _textEdit.text);
+                                                    Navigator.of(ctx).pop();
+                                                  },
+                                                  child: Text('ADD'),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                )
+                              : Container(
+                                  width: 0,
+                                  height: 0,
+                                ),
                         )),
                   ),
                   Expanded(
@@ -70,9 +131,10 @@ class C2 extends StatelessWidget {
                         left: 45,
                         top: 0,
                       ),
-                      child: SingleChildScrollView(
-                        child: Text(
-                          '\n1) : Hackathon - 2020\n\n2) : Internship-Drive - July 2020',
+                      child: ListView.builder(
+                        itemCount: club.currentClub.events.length,
+                        itemBuilder: (ctx, i) => Text(
+                          ' ${i + 1}) ${club.currentClub.events[i]}\n',
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.black,

@@ -11,9 +11,11 @@ class Details {
   List<String> memName;
   String shortdes;
   String clubId;
+  List<String> events;
+  List<String> topics;
 
   Details(this.imgUrl, this.name, this.collegeName, this.noMem, this.memName,
-      this.shortdes, this.req);
+      this.shortdes, this.req, this.events, this.topics);
 
   Map<String, dynamic> toMap() {
     return {
@@ -24,6 +26,8 @@ class Details {
       'memName': memName,
       'shortdes': shortdes,
       'requests': req,
+      'events': events,
+      'topics': topics,
     };
   }
 
@@ -38,6 +42,8 @@ class Details {
       List<String>.from(map['memName']),
       map['shortdes'],
       Set<String>.from(map['requests']),
+      List<String>.from(map['events']),
+      List<String>.from(map['topics']),
     );
   }
 }
@@ -80,6 +86,40 @@ class ClubDetail with ChangeNotifier {
     _currentClub.req.add(name);
     await db.collection('clubs').document(_currentClub.clubId).setData(
       {'requests': _currentClub.req},
+      merge: true,
+    );
+  }
+
+  Future<void> deleteRequests(String value) async {
+    final db = Firestore.instance;
+    // print(_currentClub.req);
+    _currentClub.req.remove(value);
+    await db.collection('clubs').document(_currentClub.clubId).setData(
+      {'requests': _currentClub.req},
+      merge: true,
+    );
+    notifyListeners();
+  }
+
+  Future<void> addTopics(String s) async {
+    _currentClub.topics.add(s);
+    await Firestore.instance
+        .collection('clubs')
+        .document(_currentClub.clubId)
+        .setData(
+      {'topics': _currentClub.topics},
+      merge: true,
+    );
+    notifyListeners();
+  }
+
+  Future<void> addEvents(String s) async {
+    _currentClub.events.add(s);
+    await Firestore.instance
+        .collection('clubs')
+        .document(_currentClub.clubId)
+        .setData(
+      {'events': _currentClub.events},
       merge: true,
     );
     notifyListeners();

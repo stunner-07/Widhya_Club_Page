@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 
 class UserProvider with ChangeNotifier {
   String currentUser = 'Kshitij';
+  bool ismem = false;
+  void accept() {
+    ismem = true;
+    notifyListeners();
+  }
 
 // connect this to user databse so as to fetch current user
 

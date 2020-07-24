@@ -11,17 +11,11 @@ class C1 extends StatefulWidget {
 }
 
 class _C1State extends State<C1> {
-  int flag = 0;
-
-  void _setFlag() {
-    setState(() {
-      flag = 1;
-    });
-  }
+  bool flag = false;
 
   @override
   Widget build(BuildContext context) {
-    var club = Provider.of<ClubDetail>(context);
+    var club = Provider.of<ClubDetail>(context, listen: false);
     var user = Provider.of<UserProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.only(
@@ -163,14 +157,27 @@ class _C1State extends State<C1> {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Spacer(),
-                          if (Provider.of<UserType>(context).user == 0)
-                            buttonContainer(
-                              Colors.orange,
-                              'Connect',
-                              flag,
-                              _setFlag,
-                              club,
-                              user,
+                          if (Provider.of<UserType>(context, listen: false)
+                                      .user ==
+                                  0 &&
+                              Provider.of<UserProvider>(context, listen: false)
+                                      .ismem ==
+                                  false)
+                            RaisedButton(
+                              elevation: 0,
+                              color: flag ? Colors.grey : Colors.orange,
+                              onPressed: flag
+                                  ? null
+                                  : () {
+                                      club.postRequests(user.currentUser);
+                                      setState(() {
+                                        flag = true;
+                                      });
+                                    },
+                              child: Text(
+                                'Connect',
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                         ],
                       ),
@@ -199,26 +206,4 @@ class _C1State extends State<C1> {
       ),
     );
   }
-}
-
-Widget buttonContainer(Color color, String name, int flag, Function fun,
-    ClubDetail club, UserProvider user) {
-  return Container(
-    child: FlatButton(
-      onPressed: () {
-        if (flag == 0) {
-          club.postRequests(user.currentUser);
-        }
-        fun();
-      },
-      child: Text(
-        name,
-        style: TextStyle(color: Colors.white),
-      ),
-    ),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(25),
-      color: flag == 0 ? color : Colors.grey,
-    ),
-  );
 }

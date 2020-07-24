@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:widhya_club/Models/topic_of_focus.dart';
+import 'package:widhya_club/Models/clubs_detail.dart';
 import 'package:widhya_club/Models/user_type.dart';
 
 class TOF extends StatelessWidget {
   TextEditingController _textEdit = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    var list = Provider.of<TopicsList>(context).topics;
+    var list = Provider.of<ClubDetail>(context).currentClub.topics;
     return Column(
       children: [
         SizedBox(
@@ -55,7 +55,7 @@ class TOF extends StatelessWidget {
                               ),
                               FlatButton(
                                 onPressed: () {
-                                  Provider.of<TopicsList>(context,
+                                  Provider.of<ClubDetail>(context,
                                           listen: false)
                                       .addTopics(_textEdit.text);
                                   Navigator.of(ctx).pop();
@@ -75,8 +75,10 @@ class TOF extends StatelessWidget {
         ),
         Flexible(
           child: ListView.builder(
-            itemCount:
-                Provider.of<TopicsList>(context, listen: false).topics.length,
+            itemCount: Provider.of<ClubDetail>(context, listen: false)
+                .currentClub
+                .topics
+                .length,
             itemBuilder: (ctx, i) => Column(
               children: [
                 Container(
