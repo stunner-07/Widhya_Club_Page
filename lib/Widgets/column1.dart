@@ -142,25 +142,32 @@ class _C1State extends State<C1> {
                         ),
                       ],
                     ),
-                    if (Provider.of<UserType>(context, listen: false).user ==
-                            0 &&
-                        Provider.of<UserProvider>(context, listen: false)
-                                .ismem ==
-                            false)
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        padding: EdgeInsets.only(
-                            top: 20, bottom: 20, left: 15, right: 15),
-                        decoration: BoxDecoration(
-                          color: Colors.orange[100],
-                        ),
-                        child: Row(
-                          children: [
-                            Text(
-                              '    Join Our Club',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Spacer(),
+                    Container(
+                      margin: EdgeInsets.only(top: 10),
+                      padding: EdgeInsets.only(
+                          top: 20, bottom: 20, left: 15, right: 15),
+                      decoration: BoxDecoration(
+                        color: Colors.orange[100],
+                      ),
+                      child: Row(
+                        children: [
+                          Provider.of<UserType>(context, listen: false).user ==
+                                  0
+                              ? Text(
+                                  '    Join Our Club',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                )
+                              : Text(
+                                  '    Clubs Email',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                          Spacer(),
+                          if (Provider.of<UserType>(context, listen: false)
+                                      .user ==
+                                  0 &&
+                              Provider.of<UserProvider>(context, listen: false)
+                                      .ismem ==
+                                  false)
                             RaisedButton(
                               elevation: 0,
                               color: flag ? Colors.grey : Colors.orange,
@@ -177,9 +184,9 @@ class _C1State extends State<C1> {
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
-                          ],
-                        ),
+                        ],
                       ),
+                    ),
                   ],
                 ),
               ),
@@ -270,39 +277,46 @@ class _C1State extends State<C1> {
                                                       ),
                                                     ),
                                                   ]),
-                                                  ListView.builder(
-                                                    shrinkWrap: true,
-                                                    itemCount: club1.currentClub
-                                                        .memName.length,
-                                                    itemBuilder: (ctx, i) =>
-                                                        Row(
-                                                      children: [
-                                                        Expanded(
-                                                          flex: 8,
-                                                          child: Text(
-                                                            ' ${i + 1}) ${club1.currentClub.memName[i]}\n',
-                                                            style: TextStyle(
-                                                              fontSize: 16,
-                                                              color:
-                                                                  Colors.black,
+                                                  Flexible(
+                                                    child: ListView.builder(
+                                                      shrinkWrap: true,
+                                                      itemCount: club1
+                                                          .currentClub
+                                                          .memName
+                                                          .length,
+                                                      itemBuilder: (ctx, i) =>
+                                                          Row(
+                                                        children: [
+                                                          Expanded(
+                                                            flex: 8,
+                                                            child: Text(
+                                                              ' ${i + 1}) ${club1.currentClub.memName[i]}\n',
+                                                              style: TextStyle(
+                                                                fontSize: 16,
+                                                                color: Colors
+                                                                    .black,
+                                                              ),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .left,
                                                             ),
-                                                            textAlign:
-                                                                TextAlign.left,
                                                           ),
-                                                        ),
-                                                        Expanded(
-                                                          child: IconButton(
-                                                            icon: Icon(
-                                                              Icons.cancel,
-                                                              color: Colors.red,
+                                                          Expanded(
+                                                            child: IconButton(
+                                                              icon: Icon(
+                                                                Icons.cancel,
+                                                                color:
+                                                                    Colors.red,
+                                                              ),
+                                                              onPressed: () {
+                                                                club1.delAdmin(
+                                                                    i);
+                                                              },
                                                             ),
-                                                            onPressed: () {
-                                                              club1.delAdmin(i);
-                                                            },
-                                                          ),
-                                                          flex: 2,
-                                                        )
-                                                      ],
+                                                            flex: 2,
+                                                          )
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                   FlatButton(

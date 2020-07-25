@@ -137,37 +137,42 @@ class C2 extends StatelessWidget {
                                                     ),
                                                   ),
                                                 ]),
-                                                ListView.builder(
-                                                  shrinkWrap: true,
-                                                  itemCount: club1.currentClub
-                                                      .events.length,
-                                                  itemBuilder: (ctx, i) => Row(
-                                                    children: [
-                                                      Expanded(
-                                                        flex: 8,
-                                                        child: Text(
-                                                          ' ${i + 1}) ${club1.currentClub.events[i]}\n',
-                                                          style: TextStyle(
-                                                            fontSize: 16,
-                                                            color: Colors.black,
+                                                Flexible(
+                                                  child: ListView.builder(
+                                                    shrinkWrap: true,
+                                                    itemCount: club1.currentClub
+                                                        .events.length,
+                                                    itemBuilder: (ctx, i) =>
+                                                        Row(
+                                                      children: [
+                                                        Expanded(
+                                                          flex: 8,
+                                                          child: Text(
+                                                            ' ${i + 1}) ${club1.currentClub.events[i]}\n',
+                                                            style: TextStyle(
+                                                              fontSize: 16,
+                                                              color:
+                                                                  Colors.black,
+                                                            ),
+                                                            textAlign:
+                                                                TextAlign.left,
                                                           ),
-                                                          textAlign:
-                                                              TextAlign.left,
                                                         ),
-                                                      ),
-                                                      Expanded(
-                                                        child: IconButton(
-                                                          icon: Icon(
-                                                            Icons.cancel,
-                                                            color: Colors.red,
+                                                        Expanded(
+                                                          child: IconButton(
+                                                            icon: Icon(
+                                                              Icons.cancel,
+                                                              color: Colors.red,
+                                                            ),
+                                                            onPressed: () {
+                                                              club1
+                                                                  .delEvents(i);
+                                                            },
                                                           ),
-                                                          onPressed: () {
-                                                            club1.delEvents(i);
-                                                          },
-                                                        ),
-                                                        flex: 2,
-                                                      )
-                                                    ],
+                                                          flex: 2,
+                                                        )
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                                 FlatButton(

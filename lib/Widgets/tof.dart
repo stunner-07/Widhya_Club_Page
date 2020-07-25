@@ -70,35 +70,38 @@ class TOF extends StatelessWidget {
                                     ),
                                   ),
                                 ]),
-                                ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: club1.currentClub.topics.length,
-                                  itemBuilder: (ctx, i) => Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 8,
-                                        child: Text(
-                                          ' ${i + 1}) ${club1.currentClub.topics[i]}\n',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.black,
+                                Flexible(
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    itemCount: club1.currentClub.topics.length,
+                                    itemBuilder: (ctx, i) => Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 8,
+                                          child: Text(
+                                            ' ${i + 1}) ${club1.currentClub.topics[i]}\n',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black,
+                                            ),
+                                            textAlign: TextAlign.left,
                                           ),
-                                          textAlign: TextAlign.left,
                                         ),
-                                      ),
-                                      Expanded(
-                                        child: IconButton(
-                                          icon: Icon(
-                                            Icons.cancel,
-                                            color: Colors.red,
+                                        Expanded(
+                                          child: IconButton(
+                                            icon: Icon(
+                                              Icons.cancel,
+                                              color: Colors.red,
+                                            ),
+                                            onPressed: () {
+                                              club1.delTopics(i);
+                                            },
                                           ),
-                                          onPressed: () {
-                                            club1.delTopics(i);
-                                          },
-                                        ),
-                                        flex: 2,
-                                      )
-                                    ],
+                                          flex: 2,
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 FlatButton(
