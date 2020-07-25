@@ -167,34 +167,34 @@ class TOF extends StatelessWidget {
           height: 25,
         ),
         Flexible(
-          child: ListView.builder(
-            itemCount: Provider.of<ClubDetail>(context, listen: false)
-                .currentClub
-                .topics
-                .length,
-            itemBuilder: (ctx, i) => Column(
-              children: [
+          child: Wrap(
+            children: [
+              for (String i in list)
                 Container(
-                  width: 300,
-                  height: 51,
-                  padding: EdgeInsets.only(top: 15, left: 59, right: 15),
+                  margin: EdgeInsets.fromLTRB(
+                    10,
+                    10,
+                    10,
+                    0,
+                  ),
+                  //width: 300,
+                  //height: 51,
+                  padding: EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
                     color: Colors.orange[100],
                   ),
                   child: Text(
-                    list[i],
+                    i,
                     style: TextStyle(
-                      fontSize: 15,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 15,
-                ),
-              ],
-            ),
+              SizedBox(
+                height: 15,
+              ),
+            ],
           ),
         ),
       ],
