@@ -149,8 +149,8 @@ class ClubDetail with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> delTopics(int i) async {
-    _currentClub.topics.removeAt(i);
+  Future<void> delTopics(String i) async {
+    _currentClub.topics.removeWhere((element) => element == i);
     await Firestore.instance
         .collection('clubs')
         .document(_currentClub.clubId)
