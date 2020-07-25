@@ -175,6 +175,14 @@ class _C1State extends State<C1> {
                                   ? null
                                   : () {
                                       club.postRequests(user.currentUser);
+                                      Scaffold.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            "Request Sent",
+                                          ),
+                                          duration: Duration(seconds: 5),
+                                        ),
+                                      );
                                       setState(() {
                                         flag = true;
                                       });
