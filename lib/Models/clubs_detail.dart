@@ -113,6 +113,66 @@ class ClubDetail with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> addAdmin(String s) async {
+    _currentClub.memName.add(s);
+    await Firestore.instance
+        .collection('clubs')
+        .document(_currentClub.clubId)
+        .setData(
+      {'memName': _currentClub.memName},
+      merge: true,
+    );
+    notifyListeners();
+  }
+
+  Future<void> editShortdes(String s) async {
+    _currentClub.shortdes = s;
+    await Firestore.instance
+        .collection('clubs')
+        .document(_currentClub.clubId)
+        .setData(
+      {'shortdes': _currentClub.shortdes},
+      merge: true,
+    );
+    notifyListeners();
+  }
+
+  Future<void> delEvents(int i) async {
+    _currentClub.events.removeAt(i);
+    await Firestore.instance
+        .collection('clubs')
+        .document(_currentClub.clubId)
+        .setData(
+      {'events': _currentClub.events},
+      merge: true,
+    );
+    notifyListeners();
+  }
+
+  Future<void> delTopics(int i) async {
+    _currentClub.topics.removeAt(i);
+    await Firestore.instance
+        .collection('clubs')
+        .document(_currentClub.clubId)
+        .setData(
+      {'topics': _currentClub.topics},
+      merge: true,
+    );
+    notifyListeners();
+  }
+
+  Future<void> delAdmin(int i) async {
+    _currentClub.memName.removeAt(i);
+    await Firestore.instance
+        .collection('clubs')
+        .document(_currentClub.clubId)
+        .setData(
+      {'memName': _currentClub.memName},
+      merge: true,
+    );
+    notifyListeners();
+  }
+
   Future<void> addEvents(String s) async {
     _currentClub.events.add(s);
     await Firestore.instance

@@ -53,16 +53,19 @@ class ClubsPage extends StatelessWidget {
                       ]),
                   body: SingleChildScrollView(
                     child: Container(
-                      height: 900,
+                      height: 950,
                       child: Row(
                         children: [
                           Expanded(
+                            flex: 9,
                             child: C1(),
                           ),
                           Expanded(
+                            flex: 10,
                             child: C2(),
                           ),
                           Expanded(
+                            flex: 10,
                             child: C3(),
                           ),
                         ],

@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:widhya_club/Models/clubs_detail.dart';
 import 'package:widhya_club/Models/user.dart';
 import 'package:widhya_club/Models/user_type.dart';
-import 'package:widhya_club/Widgets/tof.dart';
 
 class C1 extends StatefulWidget {
   @override
@@ -12,10 +11,10 @@ class C1 extends StatefulWidget {
 
 class _C1State extends State<C1> {
   bool flag = false;
-
+  TextEditingController _textEdit = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    var club = Provider.of<ClubDetail>(context, listen: false);
+    var club = Provider.of<ClubDetail>(context);
     var user = Provider.of<UserProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.only(
@@ -143,26 +142,25 @@ class _C1State extends State<C1> {
                         ),
                       ],
                     ),
-                    Container(
-                      margin: EdgeInsets.only(top: 10),
-                      padding: EdgeInsets.only(
-                          top: 20, bottom: 20, left: 15, right: 15),
-                      decoration: BoxDecoration(
-                        color: Colors.orange[100],
-                      ),
-                      child: Row(
-                        children: [
-                          Text(
-                            '    Join Our Club',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Spacer(),
-                          if (Provider.of<UserType>(context, listen: false)
-                                      .user ==
-                                  0 &&
-                              Provider.of<UserProvider>(context, listen: false)
-                                      .ismem ==
-                                  false)
+                    if (Provider.of<UserType>(context, listen: false).user ==
+                            0 &&
+                        Provider.of<UserProvider>(context, listen: false)
+                                .ismem ==
+                            false)
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        padding: EdgeInsets.only(
+                            top: 20, bottom: 20, left: 15, right: 15),
+                        decoration: BoxDecoration(
+                          color: Colors.orange[100],
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              '    Join Our Club',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Spacer(),
                             RaisedButton(
                               elevation: 0,
                               color: flag ? Colors.grey : Colors.orange,
@@ -179,9 +177,9 @@ class _C1State extends State<C1> {
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),
@@ -191,14 +189,181 @@ class _C1State extends State<C1> {
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: Container(
-                    child: TOF(),
                     decoration: BoxDecoration(
                       color: Colors.orange[50],
                       borderRadius: BorderRadius.circular(30),
                     ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 35,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              if (Provider.of<UserType>(context).user == 1)
+                                Container(),
+                              Text(
+                                'Club Admins',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24,
+                                ),
+                              ),
+                              if (Provider.of<UserType>(context).user == 1)
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.edit,
+                                    color: Colors.black,
+                                  ),
+                                  onPressed: () => showDialog(
+                                      context: context,
+                                      builder: (BuildContext ctx) {
+                                        return Consumer<ClubDetail>(
+                                          builder: (ctx, club1, _) => Dialog(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        20.0)), //this right here
+                                            child: Container(
+                                              padding: EdgeInsets.all(20),
+                                              height: 500,
+                                              width: 500,
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                children: [
+                                                  Row(children: [
+                                                    Expanded(
+                                                      flex: 8,
+                                                      child: Container(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(12.0),
+                                                          child: TextField(
+                                                            decoration:
+                                                                InputDecoration(
+                                                                    labelText:
+                                                                        'ADD Admins'),
+                                                            controller:
+                                                                _textEdit,
+                                                            keyboardType:
+                                                                TextInputType
+                                                                    .text,
+                                                            onSubmitted: (_) =>
+                                                                null,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: IconButton(
+                                                        icon: Icon(Icons.add),
+                                                        onPressed: () {
+                                                          club1.addAdmin(
+                                                              _textEdit.text);
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ]),
+                                                  ListView.builder(
+                                                    shrinkWrap: true,
+                                                    itemCount: club1.currentClub
+                                                        .memName.length,
+                                                    itemBuilder: (ctx, i) =>
+                                                        Row(
+                                                      children: [
+                                                        Expanded(
+                                                          flex: 8,
+                                                          child: Text(
+                                                            ' ${i + 1}) ${club1.currentClub.memName[i]}\n',
+                                                            style: TextStyle(
+                                                              fontSize: 16,
+                                                              color:
+                                                                  Colors.black,
+                                                            ),
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: IconButton(
+                                                            icon: Icon(
+                                                              Icons.cancel,
+                                                              color: Colors.red,
+                                                            ),
+                                                            onPressed: () {
+                                                              club1.delAdmin(i);
+                                                            },
+                                                          ),
+                                                          flex: 2,
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  FlatButton(
+                                                    color: Colors.pink[400],
+                                                    child: Text("Save Changes"),
+                                                    onPressed: () =>
+                                                        Navigator.of(ctx).pop(),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                )
+                            ],
+                          ),
+                        ),
+
+                        // Padding(
+                        //   padding: const EdgeInsets.all(10.0),
+                        //   child: Text(
+                        //     'Club Members',
+                        //     style: TextStyle(
+                        //       fontSize: 22,
+                        //       fontWeight: FontWeight.bold,
+                        //     ),
+                        //   ),
+                        // ),
+                        Divider(
+                          thickness: 2,
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemBuilder: (ctx, i) {
+                            return ListTile(
+                              leading: CircleAvatar(
+                                radius: 20,
+                                child: Icon(Icons.person),
+                              ),
+                              title: Text(
+                                club.currentClub.memName[i],
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.grey[800],
+                                ),
+                              ),
+                              //trailing: Text("President"),
+                            );
+                          },
+                          itemCount: club.currentClub.memName.length,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
+
               // ),
             ],
           ),
